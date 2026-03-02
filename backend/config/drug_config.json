@@ -1,0 +1,128 @@
+{
+  "metformin": {
+    "inclusion": {
+      "age_range": [18, 75],
+      "hba1c_min": 6.5,
+      "bmi_min": 25.0,
+      "egfr_min": 30.0
+    },
+    "exclusion": {
+      "severe_renal_impairment_egfr": 30.0,
+      "liver_disease": true,
+      "alcohol_abuse": true,
+      "pregnancy": true,
+      "heart_failure_class3_4": true
+    },
+    "priority_factors": {
+      "first_line_therapy": 10,
+      "weight_loss_benefit": 5,
+      "cardiovascular_benefit": 8,
+      "cost_effectiveness": 7
+    },
+    "drug_info": {
+      "mechanism": "Biguanide - reduces hepatic glucose production",
+      "typical_dose": "500-2000mg daily",
+      "common_side_effects": [
+        "GI upset",
+        "metallic taste",
+        "vitamin B12 deficiency"
+      ],
+      "monitoring_required": [
+        "renal function",
+        "vitamin B12",
+        "lactic acidosis signs"
+      ]
+    }
+  },
+
+  "sitagliptin": {
+    "inclusion": {
+      "age_range": [18, 85],
+      "hba1c_range": [7.0, 10.0],
+      "inadequate_control": true,
+      "egfr_min": 30.0
+    },
+    "exclusion": {
+      "type1_diabetes": true,
+      "pancreatitis_history": true,
+      "severe_renal_impairment_egfr": 30.0,
+      "pregnancy": true,
+      "active_pancreatitis": true
+    },
+    "priority_factors": {
+      "weight_neutral": 6,
+      "low_hypoglycemia_risk": 8,
+      "elderly_friendly": 7,
+      "combination_therapy": 5
+    },
+    "drug_info": {
+      "mechanism": "DPP-4 inhibitor - increases incretin levels",
+      "typical_dose": "100mg daily (50mg if eGFR 30–50)",
+      "common_side_effects": [
+        "headache",
+        "upper respiratory symptoms",
+        "rare pancreatitis"
+      ],
+      "monitoring_required": [
+        "pancreatic symptoms",
+        "renal function"
+      ]
+    }
+  },
+
+  "empagliflozin": {
+    "inclusion": {
+      "age_range": [18, 85],
+      "hba1c_range": [7.0, 10.0],
+      "egfr_min": 45.0,
+      "established_cvd_benefit": true
+    },
+    "exclusion": {
+      "recurrent_uti": true,
+      "genital_infections": true,
+      "ketoacidosis_history": true,
+      "severe_renal_impairment_egfr": 45.0,
+      "pregnancy": true,
+      "volume_depletion": true,
+      "amputation_risk_factors": true
+    },
+    "priority_factors": {
+      "cardiovascular_benefit": 10,
+      "weight_loss_benefit": 7,
+      "blood_pressure_benefit": 6,
+      "heart_failure_benefit": 9,
+      "renal_protection": 8
+    },
+    "drug_info": {
+      "mechanism": "SGLT2 inhibitor - blocks glucose reabsorption",
+      "typical_dose": "10-25mg daily",
+      "common_side_effects": [
+        "UTI",
+        "genital infections",
+        "dehydration",
+        "ketoacidosis risk"
+      ],
+      "monitoring_required": [
+        "ketones",
+        "volume status",
+        "foot care",
+        "infection checks"
+      ]
+    }
+  },
+
+  "scoring_weights": {
+    "safety_profile": 0.4,
+    "efficacy_match": 0.3,
+    "patient_factors": 0.2,
+    "clinical_guidelines": 0.1
+  },
+
+  "clinical_notes": {
+    "metformin_first_line": "ADA/EASD guidelines recommend metformin as first-line therapy.",
+    "combination_therapy": "Consider dual therapy if HbA1c > 9% or triple therapy if > 10%.",
+    "cardiovascular_priority": "Empagliflozin preferred for patients with established cardiovascular disease.",
+    "renal_considerations": "Adjust dose based on eGFR; avoid SGLT2 inhibitors below threshold.",
+    "elderly_considerations": "Prefer low-hypoglycemia-risk drugs in elderly patients."
+  }
+}
