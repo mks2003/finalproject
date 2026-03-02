@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from supabase import create_client
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import uuid
 from datetime import datetime
 

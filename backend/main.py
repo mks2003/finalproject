@@ -1,7 +1,10 @@
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from drug_matching import process_uploaded_drug_csv
+from consent import router as consent_router
 import os
 import shutil
 import eligibility_screening_only as es
@@ -15,6 +18,7 @@ from drug_matcher import (
 )
 
 app = FastAPI(title="ClinicSync Eligibility API")
+app.include_router(consent_router)
 
 # app.add_middleware(
 #     CORSMiddleware,
@@ -37,7 +41,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.include_router(consent_router)
 UPLOAD_DIR = "uploads"
 OUTPUT_DIR = "outputs"
 
