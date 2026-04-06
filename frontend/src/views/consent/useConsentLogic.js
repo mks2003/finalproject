@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export const useConsentLogic = (currentUser) => {
   const [selectedPatient, setSelectedPatient] = useState("");
@@ -11,31 +11,27 @@ export const useConsentLogic = (currentUser) => {
   const role = currentUser?.role;
 
   // 🔹 Simulated patients (replace later with Supabase fetch if needed)
-  const patients = [
+  const patients = useMemo(() => [
     { id: "P001", age: 52, sex: "M" },
     { id: "P002", age: 45, sex: "F" },
     { id: "P003", age: 58, sex: "M" },
     { id: "P004", age: 41, sex: "F" },
-  ];
+  ], []);
 
   // 🔹 Determine effective patient ID
   const effectivePatientId =
     role === "patient" ? currentUser?.patient_id : selectedPatient;
 
   // 🔹 Auto-load patient data
-  useEffect(() => {
-    if (!effectivePatientId) {
-      setSelectedPatientData(null);
-      return;
-    }
+ 
 
-    const patient = patients.find(
-      (p) => p.id === effectivePatientId
-    );
+    useEffect(() => {
+  const patient = patients.find(
+    (p) => p.id === effectivePatientId
+  );
 
-    setSelectedPatientData(patient || null);
-  }, [effectivePatientId]);
-
+  setSelectedPatientData(patient || null);
+}, [effectivePatientId, patients]);
   // 🔹 Generate Consent (Backend Call)
   const handleGenerateConsent = async ({
     notes,
@@ -48,7 +44,7 @@ export const useConsentLogic = (currentUser) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/consent/generate",
+        "http://127.0.0.1:5000/consent/generate",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -88,7 +84,7 @@ export const useConsentLogic = (currentUser) => {
       formData.append("file", selectedFile);
 
       const response = await fetch(
-        `http://localhost:8000/consent/upload-signed/${effectivePatientId}`,
+        `http://127.0.0.1:5000/consent/upload-signed/${effectivePatientId}`,
         {
           method: "POST",
           body: formData,
@@ -111,7 +107,7 @@ export const useConsentLogic = (currentUser) => {
   const handleDecline = async () => {
     try {
       await fetch(
-        `http://localhost:8000/consent/decline/${effectivePatientId}`,
+        `http://127.0.0.1:5000/consent/decline/${effectivePatientId}`,
         {
           method: "POST",
         }

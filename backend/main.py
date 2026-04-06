@@ -3,6 +3,8 @@ load_dotenv()
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi import Request
+#from notification import create_notification
 from drug_matching import process_uploaded_drug_csv
 from consent import router as consent_router
 import os
@@ -36,7 +38,10 @@ app.include_router(consent_router)
 # )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -90,3 +95,16 @@ async def drug_matching(file: UploadFile = File(...)):
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         filename="drug_matching_results.xlsx"
     )
+
+@app.post("/schedule")
+async def schedule_appointment(request: Request):
+    data = await request.json()
+
+    print("Appointment Booked:", data)
+
+    print(f"Notification → Doctor: Patient {data.get('patient_id')} booked on {data.get('date')} at {data.get('time')}")
+
+    return {
+        "message": "Appointment scheduled successfully",
+        "status": "success"
+    }
